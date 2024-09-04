@@ -50,17 +50,15 @@ def start_chat_session():
 
   You should politely ask the user for the following information, one question at a time, until you have all the details. The user could provide all the details in a single line:
 
-  * **Wire Type:** What is the type of the wire?
-  * **Wire Size:** What size wire?
+  * **Material:** What is the material you are machining?
 
   *Rule*
   If field is not fulfilled value should be an empty string.
 
-  Once you have gathered all the necessary information, let the user know you have everything you need. You don't need to make the prediction yourself, just gather the data.
+  Once you have gathered all the necessary information, let the user know you have everything you need and recommend a tool for cutting the material.
   { "response": "<your response>",
     "fulfilled": <true or false (true only if all Fields_required_for_point_2 are filled)>,
-    "wire_type" :  <a string or empty if not fulfilled>,
-    "wire_size" :  <a number or empty if not fulfilled (double)>,
+    "material" :  <a string or empty if not fulfilled>,
   **Output your responses in this JSON format:**
   '''
 
@@ -82,7 +80,7 @@ def start_chat_session():
 # Vertex Search Logic
 
 def execute_vaiss_query(input): # 16 AWG, UF
-  user_message = f"provide details for a wire with the following specifications: Size: {input['wire_size']}, Type: {input['wire_type']}"
+  user_message = f"provide details on the material you are trying to machine: Material: {input['material']}"
   request = discoveryengine.SearchRequest(
       serving_config=serving_config,
       query=user_message,
@@ -115,7 +113,7 @@ else:
 if "history" not in st.session_state:
   st.session_state.history = st.session_state.chat.history
 
-st.title("AI Chatbot")
+st.title("Metalworking Assistant")
 
 
 for message in st.session_state.history:
