@@ -4,7 +4,7 @@ import json
 import vertexai
 from google.cloud import aiplatform
 from vertexai.generative_models import GenerativeModel
-from google.cloud import discoveryengine as discoveryengine
+from google.cloud import us-discoveryengine as discoveryengine
 from google.protobuf.json_format import MessageToDict
 
 
