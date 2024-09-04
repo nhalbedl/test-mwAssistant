@@ -4,7 +4,7 @@ import json
 import vertexai
 from google.cloud import aiplatform
 from vertexai.generative_models import GenerativeModel
-from google.cloud import us-discoveryengine as discoveryengine
+from google.cloud import discoveryengine_v1 as discoveryengine
 from google.protobuf.json_format import MessageToDict
 
 
@@ -12,8 +12,13 @@ project_id = "genai-metalwork-dev-mscdirect"
 vais_location = "us"
 engine_id = "ata-mwgenaiassist"
 
+ client_options = (
+        ClientOptions(api_endpoint=f"{vais_location}-discoveryengine.googleapis.com")
+        if vais_location != "global"
+        else None
+    )
 
-client = discoveryengine.SearchServiceClient(client_options=None)
+client = discoveryengine.SearchServiceClient(client_options=client_options)
 serving_config = f"projects/{project_id}/locations/{vais_location}/collections/default_collection/engines/{engine_id}/servingConfigs/default_config"
 
 content_search_spec = discoveryengine.SearchRequest.ContentSearchSpec(
