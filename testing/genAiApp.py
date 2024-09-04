@@ -11,7 +11,7 @@ from google.protobuf.json_format import MessageToDict
 
 project_id = "genai-metalwork-dev-mscdirect"
 vais_location = "us"
-engine_id = "ata-mwgenaiassist"
+engine_id = "c56a727d-0713-4348-b24d-f26594ca664c"
 
 client_options = (
         ClientOptions(api_endpoint=f"{vais_location}-discoveryengine.googleapis.com")
