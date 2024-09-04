@@ -12,7 +12,7 @@ project_id = "genai-metalwork-dev-mscdirect"
 vais_location = "us"
 engine_id = "ata-mwgenaiassist"
 
- client_options = (
+client_options = (
         ClientOptions(api_endpoint=f"{vais_location}-discoveryengine.googleapis.com")
         if vais_location != "global"
         else None
