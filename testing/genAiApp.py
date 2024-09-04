@@ -50,15 +50,17 @@ def start_chat_session():
 
   You should politely ask the user for the following information, one question at a time, until you have all the details. The user could provide all the details in a single line:
 
-  * **Material:** What is the material you are machining?
+  * **Operation:**  What type of machining operation are you performing? Please respond with: Milling, Drilling, or Turning. 
+  * **Material:** What is the material being machined?
 
   *Rule*
   If field is not fulfilled value should be an empty string.
 
-  Once you have gathered all the necessary information, let the user know you have everything you need and recommend a tool for cutting the material.
+  Once you have gathered all the necessary information, let the user know you have everything you need and recommend a tool that can cut the material.
   { "response": "<your response>",
     "fulfilled": <true or false (true only if all Fields_required_for_point_2 are filled)>,
-    "material" :  <a string or empty if not fulfilled>,
+    "operation" :  <a string or empty if not fulfilled>,
+    "material" :  <a number or empty if not fulfilled (double)>,
   **Output your responses in this JSON format:**
   '''
 
@@ -80,7 +82,7 @@ def start_chat_session():
 # Vertex Search Logic
 
 def execute_vaiss_query(input): # 16 AWG, UF
-  user_message = f"provide details on the material you are trying to machine: Material: {input['material']}"
+  user_message = f"recommend a tool that can machine {input['material']} using the given {input['operation']}"
   request = discoveryengine.SearchRequest(
       serving_config=serving_config,
       query=user_message,
