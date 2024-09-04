@@ -46,7 +46,7 @@ def start_chat_session():
   vertexai.init(project=project_id, location="us-east4")
 
   system_instruction='''
-  You are a friendly and helpful conversational chatbot. You can answer a wide range of questions.
+  You are a friendly and helpful conversational chatbot. Your goal is to recommend a metalcutting tool to the user based on the machining operation and the material being machined.
 
   You should politely ask the user for the following information, one question at a time, until you have all the details. The user could provide all the details in a single line:
 
@@ -56,7 +56,7 @@ def start_chat_session():
   *Rule*
   If field is not fulfilled value should be an empty string.
 
-  Once you have gathered all the necessary information, let the user know you have everything you need and recommend a tool that can cut the material.
+  Once you have gathered all the necessary information, let the user know you have everything you need.
   { "response": "<your response>",
     "fulfilled": <true or false (true only if all Fields_required_for_point_2 are filled)>,
     "operation" :  <a string or empty if not fulfilled>,
@@ -65,7 +65,7 @@ def start_chat_session():
   '''
 
   chatbot_generation_config = {
-      "max_output_tokens": 8192,
+      "max_output_tokens": 1000,
       "temperature": 1,
       "top_p": 0.95,
       "response_mime_type": "application/json",
@@ -82,7 +82,7 @@ def start_chat_session():
 # Vertex Search Logic
 
 def execute_vaiss_query(input): # 16 AWG, UF
-  user_message = f"recommend a tool that can machine {input['material']} using the given {input['operation']}"
+  user_message = f"recommend a tool that can best perform {input['operation']} on the {input['material']}"
   request = discoveryengine.SearchRequest(
       serving_config=serving_config,
       query=user_message,
